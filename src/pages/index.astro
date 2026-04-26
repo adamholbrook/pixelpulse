@@ -1,11 +1,28 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const allReviews = (await getCollection('reviews')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const featured = allReviews.find((r) => r.data.featured) ?? allReviews[0];
+const latest = allReviews.filter((r) => r !== featured).slice(0, 6);
+
+function scoreTier(score: number) {
+	if (score >= 9) return 'masterpiece';
+	if (score >= 7) return 'great';
+	if (score >= 5) return 'decent';
+	if (score >= 3) return 'mixed';
+	return 'poor';
+}
 ---
 
-<!doctype html>
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
@@ -13,37 +30,361 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 	<body>
 		<Header />
 		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+			{featured && (
+				<section class="featured-section">
+					<a href={`/reviews/${featured.id}`} class="featured-link">
+						{featured.data.heroImage && (
+							<Image
+								src={featured.data.heroImage}
+								alt={featured.data.title}
+								width={1400}
+								height={600}
+								class="featured-bg"
+							/>
+						)}
+						<div class="featured-overlay">
+							<div class="featured-content container">
+								<div class="featured-label">Featured Review</div>
+								<div class="featured-meta">
+									<span class="tag">{featured.data.genre}</span>
+									<span class="tag tag-platform">{featured.data.platform}</span>
+								</div>
+								<h1 class="featured-title">{featured.data.title}</h1>
+								<p class="featured-desc">{featured.data.description}</p>
+								<div class="featured-bottom">
+									<div class="score-badge score-badge--featured" data-tier={scoreTier(featured.data.score)}>
+										{featured.data.score.toFixed(1)}
+									</div>
+									<div class="featured-byline">
+										<span>By <strong>{featured.data.reviewerName}</strong></span>
+										<span class="sep">·</span>
+										<FormattedDate date={featured.data.pubDate} />
+									</div>
+									<span class="read-more">Read Review →</span>
+								</div>
+							</div>
+						</div>
+					</a>
+				</section>
+			)}
+
+			{latest.length > 0 && (
+				<section class="latest-section container">
+					<div class="section-header">
+						<h2>Latest Reviews</h2>
+						<a href="/reviews" class="view-all">View All →</a>
+					</div>
+					<div class="reviews-grid">
+						{latest.map((review) => (
+							<a href={`/reviews/${review.id}`} class="review-card">
+								<div class="card-image">
+									{review.data.heroImage ? (
+										<Image
+											src={review.data.heroImage}
+											alt={review.data.title}
+											width={560}
+											height={315}
+										/>
+									) : (
+										<div class="card-placeholder" />
+									)}
+									<div class="card-score score-badge" data-tier={scoreTier(review.data.score)}>
+										{review.data.score.toFixed(1)}
+									</div>
+								</div>
+								<div class="card-body">
+									<div class="card-meta">
+										<span class="card-genre">{review.data.genre}</span>
+									</div>
+									<h3 class="card-title">{review.data.title}</h3>
+									<div class="card-footer">
+										<span class="reviewer">By {review.data.reviewerName}</span>
+										<FormattedDate date={review.data.pubDate} />
+									</div>
+								</div>
+							</a>
+						))}
+					</div>
+				</section>
+			)}
 		</main>
 		<Footer />
 	</body>
 </html>
+
+<style>
+	/* Featured */
+	.featured-section {
+		position: relative;
+		height: 560px;
+		overflow: hidden;
+		background-color: #111;
+	}
+
+	.featured-link {
+		display: block;
+		height: 100%;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.featured-bg {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: brightness(0.3);
+		border-radius: 0;
+		transition: filter 0.4s;
+	}
+
+	.featured-link:hover .featured-bg {
+		filter: brightness(0.4);
+	}
+
+	.featured-overlay {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		align-items: flex-end;
+		background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+	}
+
+	.featured-content {
+		padding: 2.5rem 1.5rem;
+		width: 100%;
+	}
+
+	.featured-label {
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		color: var(--accent);
+		margin-bottom: 0.75rem;
+	}
+
+	.featured-meta {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.tag {
+		display: inline-block;
+		padding: 0.25rem 0.75rem;
+		background-color: var(--accent);
+		color: #fff;
+		font-size: 0.7rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		border-radius: 4px;
+	}
+
+	.tag-platform {
+		background-color: rgba(255, 255, 255, 0.15);
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	.featured-title {
+		font-size: clamp(2rem, 4vw, 3.5rem);
+		color: #fff;
+		margin-bottom: 0.75rem;
+		line-height: 1.1;
+		max-width: 800px;
+	}
+
+	.featured-desc {
+		color: rgba(255, 255, 255, 0.7);
+		font-size: 1rem;
+		max-width: 600px;
+		margin-bottom: 1.5rem;
+		line-height: 1.6;
+	}
+
+	.featured-bottom {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+	}
+
+	.score-badge--featured {
+		width: 60px;
+		height: 60px;
+		font-size: 1.4rem;
+		border-radius: 10px;
+	}
+
+	.featured-byline {
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 0.875rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.featured-byline strong {
+		color: rgba(255, 255, 255, 0.9);
+	}
+
+	.sep {
+		color: rgba(255, 255, 255, 0.3);
+	}
+
+	.read-more {
+		margin-left: auto;
+		color: var(--accent);
+		font-size: 0.9rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	/* Latest section */
+	.latest-section {
+		padding: 3rem 1.5rem 4rem;
+	}
+
+	.section-header {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 1.5rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.section-header h2 {
+		font-size: 1.25rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--text-primary);
+	}
+
+	.view-all {
+		font-size: 0.8rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--accent);
+	}
+
+	.reviews-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 1.25rem;
+	}
+
+	.review-card {
+		display: flex;
+		flex-direction: column;
+		background-color: var(--bg-card);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		overflow: hidden;
+		text-decoration: none;
+		color: inherit;
+		transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+	}
+
+	.review-card:hover {
+		border-color: var(--accent);
+		transform: translateY(-2px);
+		box-shadow: var(--box-shadow);
+	}
+
+	.card-image {
+		position: relative;
+		aspect-ratio: 16/9;
+		overflow: hidden;
+		background-color: var(--bg-secondary);
+	}
+
+	.card-image img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: 0;
+		transition: transform 0.3s;
+	}
+
+	.review-card:hover .card-image img {
+		transform: scale(1.04);
+	}
+
+	.card-placeholder {
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+	}
+
+	.card-score {
+		position: absolute;
+		top: 0.6rem;
+		right: 0.6rem;
+		width: 44px;
+		height: 44px;
+		font-size: 1rem;
+	}
+
+	.card-body {
+		padding: 1rem 1.125rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		flex: 1;
+	}
+
+	.card-meta {
+		display: flex;
+		gap: 0.4rem;
+	}
+
+	.card-genre {
+		font-size: 0.65rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		padding: 0.15rem 0.5rem;
+		border-radius: 3px;
+		background-color: var(--accent);
+		color: #fff;
+	}
+
+	.card-title {
+		font-size: 1.05rem;
+		color: var(--text-primary);
+		margin: 0;
+		line-height: 1.3;
+	}
+
+	.card-footer {
+		margin-top: auto;
+		padding-top: 0.6rem;
+		border-top: 1px solid var(--border);
+		display: flex;
+		justify-content: space-between;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	.reviewer {
+		color: var(--text-secondary);
+	}
+
+	@media (max-width: 640px) {
+		.featured-section {
+			height: 440px;
+		}
+
+		.featured-bottom {
+			flex-wrap: wrap;
+		}
+
+		.read-more {
+			margin-left: 0;
+		}
+	}
+</style>

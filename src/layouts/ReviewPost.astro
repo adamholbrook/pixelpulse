@@ -1,0 +1,362 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+
+type Props = CollectionEntry<'reviews'>['data'];
+
+const { title, description, pubDate, platform, genre, score, pros, cons, verdict, reviewerName, heroImage } = Astro.props;
+
+function scoreTier(s: number) {
+	if (s >= 9) return 'masterpiece';
+	if (s >= 7) return 'great';
+	if (s >= 5) return 'decent';
+	if (s >= 3) return 'mixed';
+	return 'poor';
+}
+
+function scoreTierLabel(s: number) {
+	if (s >= 9) return 'Masterpiece';
+	if (s >= 7) return 'Great';
+	if (s >= 5) return 'Decent';
+	if (s >= 3) return 'Mixed';
+	return 'Poor';
+}
+
+const tier = scoreTier(score);
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={`${title} Review | PixelPulse`} description={description} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<div class="review-hero">
+				{heroImage && (
+					<Image
+						src={heroImage}
+						alt={`${title} hero image`}
+						width={1200}
+						height={500}
+						class="hero-img"
+					/>
+				)}
+				<div class="hero-overlay">
+					<div class="hero-meta">
+						<span class="tag">{genre}</span>
+						<span class="tag">{platform}</span>
+					</div>
+					<h1>{title}</h1>
+					<p class="hero-desc">{description}</p>
+					<div class="hero-byline">
+						<span>By <strong>{reviewerName}</strong></span>
+						<span class="separator">·</span>
+						<FormattedDate date={pubDate} />
+					</div>
+				</div>
+			</div>
+
+			<div class="review-body container">
+				<aside class="review-sidebar">
+					<div class="score-block">
+						<div class="score-badge score-badge--large" data-tier={tier}>
+							{score.toFixed(1)}
+						</div>
+						<div class="score-tier">{scoreTierLabel(score)}</div>
+					</div>
+
+					<div class="pros-cons">
+						<div class="pros">
+							<h3 class="pros-heading">Pros</h3>
+							<ul>
+								{pros.map((pro) => <li>{pro}</li>)}
+							</ul>
+						</div>
+						<div class="cons">
+							<h3 class="cons-heading">Cons</h3>
+							<ul>
+								{cons.map((con) => <li>{con}</li>)}
+							</ul>
+						</div>
+					</div>
+				</aside>
+
+				<div class="review-content">
+					<div class="verdict-box">
+						<h2 class="verdict-heading">Verdict</h2>
+						<p class="verdict-text">{verdict}</p>
+					</div>
+					<div class="prose">
+						<slot />
+					</div>
+				</div>
+			</div>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.review-hero {
+		position: relative;
+		height: 460px;
+		overflow: hidden;
+		background-color: #111;
+	}
+
+	.hero-img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: brightness(0.35);
+		border-radius: 0;
+	}
+
+	.hero-overlay {
+		position: relative;
+		z-index: 1;
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 3rem 1.5rem;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+	}
+
+	.hero-meta {
+		display: flex;
+		gap: 0.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.tag {
+		display: inline-block;
+		padding: 0.25rem 0.75rem;
+		background-color: var(--accent);
+		color: #fff;
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		border-radius: 4px;
+	}
+
+	.hero-overlay h1 {
+		font-size: clamp(2rem, 5vw, 3.5rem);
+		color: #fff;
+		margin-bottom: 0.75rem;
+		line-height: 1.1;
+	}
+
+	.hero-desc {
+		color: rgba(255, 255, 255, 0.75);
+		font-size: 1rem;
+		max-width: 700px;
+		margin-bottom: 1rem;
+	}
+
+	.hero-byline {
+		color: rgba(255, 255, 255, 0.6);
+		font-size: 0.875rem;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.hero-byline strong {
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	.separator {
+		color: rgba(255, 255, 255, 0.3);
+	}
+
+	.review-body {
+		display: grid;
+		grid-template-columns: 300px 1fr;
+		gap: 3rem;
+		padding-top: 3rem;
+		padding-bottom: 4rem;
+		align-items: start;
+	}
+
+	/* Score */
+	.review-sidebar {
+		position: sticky;
+		top: 80px;
+	}
+
+	.score-block {
+		text-align: center;
+		margin-bottom: 2rem;
+		padding: 2rem;
+		background-color: var(--bg-secondary);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+	}
+
+	.score-badge--large {
+		width: 100px;
+		height: 100px;
+		font-size: 2.5rem;
+		border-radius: 12px;
+		margin: 0 auto 0.75rem;
+	}
+
+	.score-tier {
+		font-size: 0.875rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--text-secondary);
+	}
+
+	/* Pros/Cons */
+	.pros-cons {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.pros,
+	.cons {
+		background-color: var(--bg-secondary);
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		padding: 1.25rem;
+	}
+
+	.pros-heading,
+	.cons-heading {
+		font-size: 0.8rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		margin-bottom: 0.75rem;
+	}
+
+	.pros-heading {
+		color: var(--score-green);
+	}
+
+	.cons-heading {
+		color: var(--score-red);
+	}
+
+	.pros ul,
+	.cons ul {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	.pros ul li::before {
+		content: '+  ';
+		color: var(--score-green);
+		font-weight: 700;
+	}
+
+	.cons ul li::before {
+		content: '−  ';
+		color: var(--score-red);
+		font-weight: 700;
+	}
+
+	.pros ul li,
+	.cons ul li {
+		font-size: 0.9rem;
+		color: var(--text-secondary);
+		margin-bottom: 0.5rem;
+		line-height: 1.5;
+	}
+
+	/* Verdict */
+	.verdict-box {
+		background-color: var(--bg-secondary);
+		border: 1px solid var(--border);
+		border-left: 4px solid var(--accent);
+		border-radius: var(--radius);
+		padding: 1.5rem 2rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.verdict-heading {
+		font-size: 0.8rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--accent);
+		margin-bottom: 0.75rem;
+	}
+
+	.verdict-text {
+		font-size: 1.05rem;
+		color: var(--text-primary);
+		line-height: 1.7;
+		margin: 0;
+		font-style: italic;
+	}
+
+	/* Prose */
+	.prose {
+		color: var(--text-secondary);
+		line-height: 1.8;
+	}
+
+	.prose :global(h2) {
+		color: var(--text-primary);
+		font-size: 1.4rem;
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--border);
+	}
+
+	.prose :global(h3) {
+		color: var(--text-primary);
+		font-size: 1.15rem;
+		margin-top: 1.5rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.prose :global(p) {
+		color: var(--text-secondary);
+	}
+
+	@media (max-width: 900px) {
+		.review-body {
+			grid-template-columns: 1fr;
+		}
+
+		.review-sidebar {
+			position: static;
+		}
+
+		.pros-cons {
+			flex-direction: row;
+		}
+
+		.pros,
+		.cons {
+			flex: 1;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.review-hero {
+			height: 380px;
+		}
+
+		.pros-cons {
+			flex-direction: column;
+		}
+	}
+</style>
