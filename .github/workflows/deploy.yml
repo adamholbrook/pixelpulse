@@ -64,10 +64,6 @@ jobs:
 
       - name: Build site
         run: npm run build
-        env:
-          # Injects the correct base path for GitHub Pages
-          ASTRO_SITE: ${{ steps.pages.outputs.origin }}
-          ASTRO_BASE: ${{ steps.pages.outputs.base_path }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

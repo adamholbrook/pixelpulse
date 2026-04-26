@@ -7,7 +7,7 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const base = import.meta.env.BASE_URL;
 const allReviews = (await getCollection('reviews')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
@@ -33,7 +33,7 @@ function scoreTier(score: number) {
 		<main>
 			{featured && (
 				<section class="featured-section">
-					<a href={`${base}/reviews/${featured.id}`} class="featured-link">
+					<a href={`${base}reviews/${featured.id}`} class="featured-link">
 						{featured.data.heroImage && (
 							<Image
 								src={featured.data.heroImage}
@@ -73,11 +73,11 @@ function scoreTier(score: number) {
 				<section class="latest-section container">
 					<div class="section-header">
 						<h2>Latest Reviews</h2>
-						<a href={`${base}/reviews`} class="view-all">View All →</a>
+						<a href={`${base}reviews`} class="view-all">View All →</a>
 					</div>
 					<div class="reviews-grid">
 						{latest.map((review) => (
-							<a href={`${base}/reviews/${review.id}`} class="review-card">
+							<a href={`${base}reviews/${review.id}`} class="review-card">
 								<div class="card-image">
 									{review.data.heroImage ? (
 										<Image

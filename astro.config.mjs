@@ -7,7 +7,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://adamholbrook.github.io',
-	base: '/pixelpulse',
+	base: '/pixelpulse/',
 	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
