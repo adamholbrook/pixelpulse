@@ -33,4 +33,37 @@ const reviews = defineCollection({
 		}),
 });
 
-export const collections = { blog, reviews };
+const coinsWellSpent = defineCollection({
+	loader: glob({ base: './src/content/coins-well-spent', pattern: '**/*.{md,mdx}' }),
+	schema: ({ image }) =>
+		z.object({
+			title: z.string(),
+			description: z.string(),
+			pubDate: z.coerce.date(),
+			originalRelease: z.string(),
+			platform: z.string(),
+			genre: z.string(),
+			score: z.number().min(1).max(10),
+			pros: z.array(z.string()),
+			cons: z.array(z.string()),
+			verdict: z.string(),
+			reviewerName: z.string(),
+			heroImage: z.optional(image()),
+			featured: z.boolean().default(false),
+		}),
+});
+
+const sideQuests = defineCollection({
+	loader: glob({ base: './src/content/side-quests', pattern: '**/*.{md,mdx}' }),
+	schema: ({ image }) =>
+		z.object({
+			title: z.string(),
+			description: z.string(),
+			pubDate: z.coerce.date(),
+			author: z.string(),
+			heroImage: z.optional(image()),
+			tags: z.array(z.string()).default([]),
+		}),
+});
+
+export const collections = { blog, reviews, coinsWellSpent, sideQuests };

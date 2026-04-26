@@ -17,7 +17,7 @@ cons:
   - "The sheer volume of options can overwhelm new RPG players"
 verdict: "Baldur's Gate 3 is a landmark achievement — an RPG that truly delivers on the promise of meaningful choice and consequence. Larian Studios has crafted a game that will be studied, celebrated, and replayed for decades."
 reviewerName: "Sam Rivera"
-heroImage: "../../assets/blog-placeholder-2.jpg"
+heroImage: "../../assets/baldurs-gate-3-hero.jpg"
 featured: false
 ---
 

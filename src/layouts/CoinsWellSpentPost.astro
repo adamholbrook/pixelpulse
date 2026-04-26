@@ -6,9 +6,9 @@ import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 
-type Props = CollectionEntry<'reviews'>['data'];
+type Props = CollectionEntry<'coinsWellSpent'>['data'];
 
-const { title, description, pubDate, platform, genre, score, pros, cons, verdict, reviewerName, heroImage } = Astro.props;
+const { title, description, pubDate, originalRelease, platform, genre, score, pros, cons, verdict, reviewerName, heroImage } = Astro.props;
 
 function scoreTier(s: number) {
 	if (s >= 9) return 'masterpiece';
@@ -31,7 +31,7 @@ const tier = scoreTier(score);
 
 <html lang="en">
 	<head>
-		<BaseHead title={`${title} Review | PixelPulse`} description={description} />
+		<BaseHead title={`${title} (${originalRelease}) | Coins Well Spent | PixelPulse`} description={description} />
 	</head>
 	<body>
 		<Header />
@@ -48,13 +48,16 @@ const tier = scoreTier(score);
 				)}
 				<div class="hero-overlay">
 					<div class="hero-meta">
+						<span class="tag tag-classic">Coins Well Spent</span>
 						<span class="tag">{genre}</span>
-						<span class="tag">{platform}</span>
+						<span class="tag tag-platform">{platform}</span>
 					</div>
 					<h1>{title}</h1>
 					<p class="hero-desc">{description}</p>
 					<div class="hero-byline">
-						<span>By <strong>{reviewerName}</strong></span>
+						<span class="original-year">Originally released {originalRelease}</span>
+						<span class="separator">·</span>
+						<span>Reviewed by <strong>{reviewerName}</strong></span>
 						<span class="separator">·</span>
 						<FormattedDate date={pubDate} />
 					</div>
@@ -68,6 +71,12 @@ const tier = scoreTier(score);
 							{score.toFixed(1)}
 						</div>
 						<div class="score-tier">{scoreTierLabel(score)}</div>
+					</div>
+
+					<div class="classic-badge">
+						<div class="coin">🪙</div>
+						<div class="classic-label">Classic Pick</div>
+						<div class="classic-year">{originalRelease}</div>
 					</div>
 
 					<div class="pros-cons">
@@ -134,6 +143,7 @@ const tier = scoreTier(score);
 	.hero-meta {
 		display: flex;
 		gap: 0.5rem;
+		flex-wrap: wrap;
 		margin-bottom: 1rem;
 	}
 
@@ -147,6 +157,16 @@ const tier = scoreTier(score);
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 		border-radius: 4px;
+	}
+
+	.tag-classic {
+		background-color: var(--score-gold);
+		color: #000;
+	}
+
+	.tag-platform {
+		background-color: rgba(255, 255, 255, 0.15);
+		color: rgba(255, 255, 255, 0.85);
 	}
 
 	.hero-overlay h1 {
@@ -169,10 +189,19 @@ const tier = scoreTier(score);
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
+		flex-wrap: wrap;
 	}
 
 	.hero-byline strong {
 		color: rgba(255, 255, 255, 0.85);
+	}
+
+	.original-year {
+		color: var(--score-gold);
+		font-weight: 700;
+		font-size: 0.8rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
 	}
 
 	.separator {
@@ -188,7 +217,6 @@ const tier = scoreTier(score);
 		align-items: start;
 	}
 
-	/* Score */
 	.review-sidebar {
 		position: sticky;
 		top: 80px;
@@ -196,7 +224,7 @@ const tier = scoreTier(score);
 
 	.score-block {
 		text-align: center;
-		margin-bottom: 2rem;
+		margin-bottom: 1.5rem;
 		padding: 2rem;
 		background-color: var(--bg-secondary);
 		border: 1px solid var(--border);
@@ -219,7 +247,35 @@ const tier = scoreTier(score);
 		color: var(--text-secondary);
 	}
 
-	/* Pros/Cons */
+	.classic-badge {
+		text-align: center;
+		margin-bottom: 1.5rem;
+		padding: 1.25rem;
+		background-color: var(--bg-secondary);
+		border: 1px solid var(--score-gold);
+		border-radius: var(--radius);
+	}
+
+	.coin {
+		font-size: 1.75rem;
+		margin-bottom: 0.4rem;
+	}
+
+	.classic-label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--score-gold);
+	}
+
+	.classic-year {
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: var(--text-primary);
+		margin-top: 0.25rem;
+	}
+
 	.pros-cons {
 		display: flex;
 		flex-direction: column;
@@ -243,13 +299,8 @@ const tier = scoreTier(score);
 		margin-bottom: 0.75rem;
 	}
 
-	.pros-heading {
-		color: var(--score-green);
-	}
-
-	.cons-heading {
-		color: var(--score-red);
-	}
+	.pros-heading { color: var(--score-green); }
+	.cons-heading { color: var(--score-red); }
 
 	.pros ul,
 	.cons ul {
@@ -278,7 +329,6 @@ const tier = scoreTier(score);
 		line-height: 1.5;
 	}
 
-	/* Verdict */
 	.verdict-box {
 		background-color: var(--bg-secondary);
 		border: 1px solid var(--border);
@@ -305,7 +355,6 @@ const tier = scoreTier(score);
 		font-style: italic;
 	}
 
-	/* Prose */
 	.prose {
 		color: var(--text-secondary);
 		line-height: 1.8;

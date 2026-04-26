@@ -17,7 +17,7 @@ cons:
   - "Occasional performance issues on PC at launch"
 verdict: "Elden Ring is a generational achievement. FromSoftware has taken everything that makes their games special and amplified it through a massive, meticulously crafted open world. It sets a new benchmark for the genre and stands as one of the greatest games ever made."
 reviewerName: "Alex Chen"
-heroImage: "../../assets/blog-placeholder-1.jpg"
+heroImage: "../../assets/elden-ring-hero.jpg"
 featured: true
 ---
 
