@@ -1,55 +1,131 @@
 ---
 title: "Final Fantasy VI"
-description: "Square's 1994 magnum opus — an operatic tale of revolution, loss, and hope that remains the high-water mark of the JRPG genre."
-pubDate: "Apr 26 2026"
+description: "Three figures in Magitek armour step through swirling snow, and something begins. Paddy Herlihy on why this tale — thirty years on — has not loosened its grip."
+pubDate: "May 02 2026"
 originalRelease: "1994"
 platform: "SNES (also: GBA, PC, mobile, Switch)"
 genre: "JRPG"
-score: 9.5
+score: 9
 pros:
-  - "One of the greatest villain monologues in gaming history — Kefka is unforgettable"
-  - "Ensemble cast of 14 characters each with their own arc and motivation"
-  - "Nobuo Uematsu's score is an absolute masterwork — Terra's Theme alone earns this point"
-  - "The World of Ruin midpoint twist genuinely changes the game's entire structure"
-  - "Timeless pixel art and environmental design that still looks stunning"
+  - "The Opera scene alone — a masterclass in pacing, music, and storytelling"
+  - "A large and varied cast — each with their own story, far beyond the usual few"
+  - "Exceptional music throughout — seamlessly heightening every emotional beat"
+  - "The Esper system refreshes the formula — freeing characters from rigid roles"
+  - "A truly shattering midpoint — a world-ending moment that genuinely lands"
+  - "Charming, timeless artwork — beautifully preserved in the Pixel Remaster"
+  - "Ultros steals every scene — a rare comedic villain who never outstays his welcome"
 cons:
-  - "Pacing stumbles slightly in the World of Ruin as you reassemble the party"
-  - "Some characters feel underdeveloped relative to the main cast"
-  - "Modern ports have mixed reputations — the original SNES version is the gold standard"
-verdict: "Final Fantasy VI is a rare achievement: a game that feels genuinely cinematic through sheer craft and restraint, not spectacle. Kefka stands as gaming's greatest villain, and the cast of Terra, Celes, Locke, and Sabin remains unmatched. A must-play for anyone who cares about what games can be."
-reviewerName: "[Your Name]"
+  - "A slower start to Act III — the pacing dips after the world-altering climax"
+  - "An uneven cast in practice — some characters struggle to stand alongside the core group"
+  - "Inconsistent port quality — earlier versions fall short of the original's strength"
+  - "Grind-heavy for completionists — Espers and optimisation demand significant time"
+  - "An overly easy endgame — late-game power can undercut the final challenge"
+verdict: "Final Fantasy VI is a flawed masterpiece: ambitious, melancholic, and unforgettable. It remains one of the defining works of the genre — not because it is perfect, but because it dares to be profound."
+reviewerName: "Paddy Herlihy"
 heroImage: "../../assets/final-fantasy-vi-hero.jpg"
 featured: false
 ---
 
-*This is a template review — replace this content with your full thoughts on Final Fantasy VI.*
+## On the Opening Omen
 
-## First Impressions
+A dark sky rolls in. Lightning splits the heavens, each flash casting brief, cruel glimpses of a world dimming before its time. A slow, weighty organ rises, and the very air turns ominous beneath its breath.
 
-When you boot up Final Fantasy VI for the first time, you're greeted with a scene that sets the tone perfectly: three figures in Magitek armour marching through a blizzard toward a mining town. There's no dialogue. Just Uematsu's Terra's Theme, snowflakes on a dark screen, and an immediate sense that something enormous is about to happen.
+Then the title comes.
 
-It still gives me chills.
+And with it, a shift.
 
-## The World Before the World Ends
+The organ yields to a lighter harp, fragile as frost, and through swirling snow there step three figures clad in Magitek armour. Their march is laboured, each footfall heavy, as though the world itself resists them. The music falters with them — tired, deliberate — pressing ever onward.
 
-[Write about the World of Balance — the setting, the Empire vs. the Returners, your first impressions of the cast.]
+Mark this well: this is no mere opening.
 
-## Kefka
+It is a declaration.
 
-[This section deserves its own heading. Talk about what makes Kefka work as a villain where so many others fail.]
+A grand opera in its first note — measured, chilling, assured. Music that lingers. Characters that take root. A story that will not loosen its grip, not even when the curtain falls.
 
-## The Opera Scene
+---
 
-No game in 1994 — on any platform — attempted anything like the opera scene. Write your take on it here.
+## On Heroes and Villains Alike
 
-## The World of Ruin
+Hear now of those who walk between light and shadow.
 
-[The moment the game breaks its own premise. Talk about what this did to you emotionally the first time you played it.]
+Heroes. Villains. Words often treated as clean opposites. Yet here, those lines blur and bend, woven together with a deftness that leaves one wanting more.
 
-## The Final Dungeon
+For how can you not find yourself drawn even to the villains?
 
-[The Floating Continent and Kefka's Tower — how do they hold up?]
+Consider Ultros — ever returning, ever resilient — his strange devotion to crossing your path again and again. From first encounter to last, he endures, and in that endurance earns a curious fondness.
 
-## Why It Still Matters
+And then — Kefka.
 
-[Your concluding thoughts — why does FFVI still resonate in 2026? What does it do that modern games miss?]
+He stands apart. Not a tyrant seeking dominion, but something far more unsettling: a force bent not on ruling the world, but on unmaking it. In this, he marks a turning point — a departure from what came before, and a shadow that later tales would follow.
+
+These are no longer hollow caricatures. They love and sing, dance and curse, dream and despair. They are, in their fashion, understood.
+
+Yet the heroes are no less human.
+
+They falter. They endure. They endear.
+
+The familiar forms remain — the rogue in Locke, the martial artist in Sabin, the turncoat general in Celes, the troubled amnesiac in Terra. At a glance, nothing new.
+
+But look closer.
+
+Their words carry weight. Their pasts are lived, not told. And you do not walk with one hero — you journey with many.
+
+And when the world falls — when ruin comes, as it must — what follows is no simple rally.
+
+It is something heavier.
+
+A quiet reckoning. A world already lost.
+
+You do not rise because victory is certain — you rise because something, however small, is still worth saving.
+
+The tale itself may be oft told — but here, it breathes anew.
+
+---
+
+## A Note on the Opera Scene
+
+The Opera scene is not merely memorable — it is masterfully placed.
+
+There is a sombre weight to it: the performance, the setting, the tale within the tale. Yet it is Celes who gives it power.
+
+Until now, she has been ironclad — an armoured general, defined by conflict. Here, she becomes something else.
+
+She sings.
+
+At first uncertain, her voice fragile — then growing, strengthening. It is the sound of someone rediscovering herself, free from the Empire's grasp.
+
+And beneath it lies quiet craft.
+
+Flowers cast from a balcony linger in the mind — only to echo later, when Celes stands alone at the edge of despair. That moment, when all seems lost, finds its answer not in triumph, but in something smaller — hope, carried on the wind.
+
+And amidst it all — Ultros.
+
+Lurking. Interfering. Bringing chaos where none should belong.
+
+It should break the moment.
+
+Instead, it sharpens it.
+
+The contrast deepens the tragedy, brightens the levity, and elevates the whole into something unforgettable.
+
+---
+
+## On a Tale Most Uncommon
+
+Final Fantasy VI is a rare achievement: a work that feels cinematic not through spectacle, but through restraint.
+
+It does not shout.
+
+It does not need to.
+
+Its power lies in craft — in pacing, in music, in character. In knowing when to hold back, and when to let the moment speak for itself.
+
+And at its centre — Kefka.
+
+A villain not of ambition, but annihilation. A jester who would see the world burn and laugh as it does. In him, the series finds something darker, something more enduring.
+
+Against him stand Terra, Celes, Locke, Sabin — each carrying their own burdens, each leaving their mark.
+
+This is no fleeting tale.
+
+It is one that lingers.
