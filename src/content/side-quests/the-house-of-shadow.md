@@ -7,7 +7,7 @@ heroImage: "../../assets/lyron-banner.jpg"
 tags: ["Fantasy", "Short Story", "Lyron"]
 ---
 
-*Continued from [The Winter Winds](/pixelpulse/side-quests/the-winter-winds).*
+*Continued from [The Winter Winds](/inkandxp/side-quests/the-winter-winds).*
 
 ---
 
